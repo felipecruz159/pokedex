@@ -11,15 +11,25 @@ function convertPokeApiDetailToPokemon(pokeDetail) {
     pokemon.types = types
     pokemon.type = type
 
-    pokemon.photo = pokeDetail.sprites.other.dream_world.front_default
+    pokemon.photo = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.number}.png`
 
+    pokemon.height = pokeDetail.height
+    pokemon.weight = pokeDetail.weight
+    pokemon.abilities = pokeDetail.abilities.map((abilities) => abilities.ability.name)
+
+    pokemon.stats = pokeDetail.stats.map((stats) => stats.base_stat)
+    pokemon.statsName = pokeDetail.stats.map((stats) => stats.stat.name)
+    pokemon.pokeStats = Object.fromEntries(pokemon.statsName.map((element, index) => [element, pokemon.stats[index]]))
+    
+
+    console.log(pokemon.pokeStats)
     return pokemon
 }
 
 pokeApi.getPokemonDetail = (pokemon) => {
     return fetch(pokemon.url)
-    .then((response) => response.json())
-    .then(convertPokeApiDetailToPokemon) // converte a response para json
+    .then((response) => response.json()) // converte a response para json
+    .then(convertPokeApiDetailToPokemon) 
 }
 
 pokeApi.getPokemons = (offset = 0, limit = 5) => {
@@ -31,5 +41,14 @@ pokeApi.getPokemons = (offset = 0, limit = 5) => {
         .then((pokemons) => pokemons.map(pokeApi.getPokemonDetail)) // detalhes do pokemon
         .then((detailRequests) => Promise.all(detailRequests)) //esperando que todas as requisicoes terminem
         .then((pokemonDetails) => pokemonDetails) //retorna os pokemons com detalhes
+}
+
+pokeApi.getPokemonAdvancedDetails = (pokemonId) => {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+    return fetch(url)
+    .then((response) => response.json())
+    .then((data) => Promise.all([
+        convertPokeApiDetailToPokemon(data),
+    ]))
 }
 
