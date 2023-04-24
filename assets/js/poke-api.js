@@ -20,9 +20,8 @@ function convertPokeApiDetailToPokemon(pokeDetail) {
     pokemon.stats = pokeDetail.stats.map((stats) => stats.base_stat)
     pokemon.statsName = pokeDetail.stats.map((stats) => stats.stat.name)
     pokemon.pokeStats = Object.fromEntries(pokemon.statsName.map((element, index) => [element, pokemon.stats[index]]))
-    
 
-    console.log(pokemon.pokeStats)
+    // console.log(pokemon.pokeStats)
     return pokemon
 }
 

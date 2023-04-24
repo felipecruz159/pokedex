@@ -50,7 +50,7 @@
     text-align: center;
 }
 
-.pokemons a{
+.pokemons a {
     text-decoration: none;
 }
 
@@ -141,7 +141,7 @@
     padding: 1rem;
 }
 
-.pagination button{
+.pagination button {
     padding: .25rem .5rem;
     margin: .25rem 0;
     font: .625rem;
@@ -151,6 +151,17 @@
     border-radius: 1rem;
     cursor: pointer;
 }
+
+
+/* DETAILS */
+
+.detailsBackground {
+    border-radius: 1rem;
+    height: 40vh;
+    margin: 0;
+    padding: 0;
+}
+
 
 @media screen and (min-width: 420px) {
     .pokemons {
@@ -169,5 +180,3 @@
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
-
-/* DETAILS */
